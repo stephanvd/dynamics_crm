@@ -9,7 +9,8 @@ describe DynamicsCRM::XML::Attributes do
         "modifiedon" => Time.now,
         "donotemail" => true,
         "id" => "1bfa3886-df7e-468c-8435-b5adfb0441ed",
-        "reference" => {"Id" => "someid", "Name" => "entityname", "LogicalName" => "opportunity"}
+        "reference" => {"Id" => "someid", "Name" => "entityname", "LogicalName" => "opportunity"},
+        "address1_latitude" => DynamicsCRM::Metadata::Double.new(5.22123)
       }
     }
     subject {
@@ -32,6 +33,10 @@ describe DynamicsCRM::XML::Attributes do
       it { expect(subject.to_xml).to include("<c:key>telephone1</c:key>") }
       it { expect(subject.to_xml).to include("<c:key>donotemail</c:key>") }
       it { expect(subject.to_xml).to include("<c:key>modifiedon</c:key>") }
+      it do
+        expect(subject.to_xml)
+          .to include('<c:value i:type="s:double" xmlns:s="http://www.w3.org/2001/XMLSchema">5.22123</c:value>')
+      end
     end
 
   end
